@@ -1,5 +1,6 @@
 import random
 
+
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 #Sakk.py-ból :)
 
@@ -23,12 +24,12 @@ szinek = {
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-x = input(szinek['sárga'] + "Add meg a pálya szélességét (pl. 5 -> egy 5x? nagyságú labirintust fog felrajzolni): ")
+x = input(szinek['sárga'] + "\nAdd meg a pálya szélességét (a keretet nem bele számítva): ")
 while x.isnumeric() == False:
     x = input(szinek['piros'] + "SZÁMOT adjál meg: ")
 x = int(x)
 
-y = input(szinek['sárga'] + "Add meg a pálya hosszúságát (pl. 6 -> egy ?x6 nagyságú labirintust fog rajzolni): ")
+y = input(szinek['sárga'] + "Add meg a pálya hosszúságát (a keretet nem bele számítva): ")
 while y.isnumeric() == False:
     y = input(szinek['piros'] + "SZÁMOT adjál meg: ")
 y = int(y)
@@ -79,18 +80,20 @@ def labirintus_rajz(x, y):
 
         for sor_index in range(x):
             if reszekre_bontott_lab[oszlop_index][sor_index] == 1:
-                if sor_index == 0:
-                    if oszlop_index == 0:
-                        print(szinek['sárga'], "┘", end="")
+                if sor_index == 0:  #Ha bal oldalon van...
+                    if oszlop_index == 0:  #Ha legfelül van...
+                        print(szinek['v_kék'], "┘", end="")  #Ha a balfelső sarokban van, akkor ┘ legyen.
+                    elif oszlop_index == y:  #Ha a balalsó sarokban van, akkor ┐ jelenjen meg
+                        print(szinek['v_kék'], "┐", end="")
                     else:
-                        print(szinek['sárga'], "─", end="")
+                        print(szinek['v_kék'], "─", end="")  #Ha a bal oldalt van, akkor ─ legyen.
                 else:
-                    print(szinek['sárga'], "│", end="")
+                    print(szinek['v_kék'], "│", end="")
                 if sor_index == -1:
                     if oszlop_index == 0:
-                        print(szinek['sárga'], "└", end="")
+                        print(szinek['v_kék'], "└", end="")
                     else:
-                        print(szinek['sárga'], "─", end="")
+                        print(szinek['v_kék'], "─", end="")
             if reszekre_bontott_lab[oszlop_index][sor_index] == "X":
                 print(szinek['v_zöld'], "X", end="")
             if reszekre_bontott_lab[oszlop_index][sor_index] == 0:

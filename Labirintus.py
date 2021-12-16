@@ -26,7 +26,7 @@ szinek = {
 
 print(szinek['sárga'] + "\nÜDV A LABIRINTUS NEVŰ JÁTÉKBAN!\n")
 print("Ahoz, hogy nyerj, el kell juttatnod a "+ szinek['v_zöld'] + "X" + szinek['sárga'] + "-et a " + szinek['v_piros'] + "◯" + szinek['sárga'] + "-höz.")
-print("Az mozgás a " + szinek['v_kék'] + "'fel'" + szinek['sárga'] + ", " + szinek['v_kék'] + "'le'" + szinek['sárga'] + ", " + szinek['v_kék'] + "'jobbra'" + szinek['sárga'] + ", " + szinek['v_kék'] + "'balra'" + szinek['sárga'] + " szavak beírásával működik.")
+print("Az mozgás a " + szinek['v_kék'] + "'fel'" + szinek['sárga'] + ", " + szinek['v_kék'] + "'le'" + szinek['sárga'] + ", " + szinek['v_kék'] + "'jobb'" + szinek['sárga'] + ", " + szinek['v_kék'] + "'bal'" + szinek['sárga'] + " szavak beírásával működik.")
 print("Sok sikert!\n")
 print("-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------")
 
@@ -84,11 +84,11 @@ def main(x, y):
 def rajz():
     global x_oszlop
     global x_sor
-    print("Leegyszerűsített labirintus:\n")
+    '''print("Leegyszerűsített labirintus:\n")
     for oszlop in range(y):
         for sor in range(x):
             print(labirintus[oszlop][sor], end="")
-        print()
+        print()'''
 
 
     print("\nLabirintus:\n")
@@ -113,34 +113,58 @@ def rajz():
 
 
 def move(mozgas):
+
+    global run
+    run = True
+
     if mozgas == "fel":
-        if labirintus[(x_oszlop - 1)][x_sor] == 1:
+        if labirintus[x_oszlop - 1][x_sor] == 1:
             print(szinek['piros'] + "Ide nem léphetsz!")
+        elif labirintus[x_oszlop - 1][x_sor] == "◯":
+            print(szinek['v_zöld'] + "NYERTÉL!")
+            run = False
         else:
             print("fel")
             labirintus[(x_oszlop - 1)].pop(x_sor)
             labirintus[(x_oszlop - 1)].insert(x_sor, "X")
+            labirintus[x_oszlop].pop(x_sor)
+            labirintus[x_oszlop].insert(x_sor, 0)
     elif mozgas == "le":
-        if labirintus[(x_oszlop + 1)][x_sor] == 1:
+        if labirintus[x_oszlop + 1][x_sor] == 1:
             print(szinek['piros'] + "Ide nem léphetsz!")
+        elif labirintus[x_oszlop + 1][x_sor] == "◯":
+            print(szinek['v_zöld'] + "NYERTÉL!")
+            run = False
         else:
             print("le")
-            labirintus[(x_oszlop + 1)].pop(x_sor)
-            labirintus[(x_oszlop + 1)].insert(x_sor, "X")
-    elif mozgas == "jobbra":
+            labirintus[x_oszlop + 1].pop(x_sor)
+            labirintus[x_oszlop + 1].insert(x_sor, "X")
+            labirintus[x_oszlop].pop(x_sor)
+            labirintus[x_oszlop].insert(x_sor, 0)
+    elif mozgas == "jobb":
         if labirintus[x_oszlop][x_sor + 1] == 1:
             print(szinek['piros'] + "Ide nem léphetsz!")
+        elif labirintus[x_oszlop][x_sor + 1] == "◯":
+            print(szinek['v_zöld'] + "NYERTÉL!")
+            run = False
         else:
-            print("jobbra")
+            print("jobb")
             labirintus[x_oszlop].pop(x_sor + 1)
             labirintus[x_oszlop].insert(x_sor + 1, "X")
-    elif mozgas == "balra":
+            labirintus[x_oszlop].pop(x_sor)
+            labirintus[x_oszlop].insert(x_sor, 0)
+    elif mozgas == "bal":
         if labirintus[x_oszlop][x_sor - 1] == 1:
             print(szinek['piros'] + "Ide nem léphetsz!")
+        elif labirintus[x_oszlop][x_sor - 1] == "◯":
+            print(szinek['v_zöld'] + "NYERTÉL!")
+            run = False
         else:
-            print("balra")
+            print("bal")
             labirintus[x_oszlop].pop(x_sor - 1)
             labirintus[x_oszlop].insert(x_sor - 1, "X")
+            labirintus[x_oszlop].pop(x_sor)
+            labirintus[x_oszlop].insert(x_sor, 0)
     elif mozgas == "exit":
         run = False
     else:
@@ -154,5 +178,5 @@ main(x, y)
 run = True
 while run:
     rajz()
-    irany = (input(szinek['sárga'] + "\nMerre akarsz mozogni? (fel, le, jobbra, balra): "))
+    irany = (input(szinek['sárga'] + "\nMerre akarsz mozogni? (fel, le, jobb, bal): "))
     move(irany)

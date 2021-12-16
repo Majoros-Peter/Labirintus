@@ -24,109 +24,123 @@ szinek = {
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
+print(szinek['sárga'] + "\nÜDV A LABIRINTUS NEVŰ JÁTÉKBAN!\n")
+print("Ahoz, hogy nyerj, el kell juttatnod a "+ szinek['v_zöld'] + "X" + szinek['sárga'] + "-et a " + szinek['v_piros'] + "◯" + szinek['sárga'] + "-höz.")
+print("Az mozgás a " + szinek['v_kék'] + "'fel'" + szinek['sárga'] + ", " + szinek['v_kék'] + "'le'" + szinek['sárga'] + ", " + szinek['v_kék'] + "'jobbra'" + szinek['sárga'] + ", " + szinek['v_kék'] + "'balra'" + szinek['sárga'] + " szavak beírásával működik.")
+print("Sok sikert!\n")
+print("-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------")
+
 x = input(szinek['sárga'] + "\nAdd meg a pálya szélességét (a keretet nem bele számítva): ")
 while x.isnumeric() == False:
     x = input(szinek['piros'] + "SZÁMOT adjál meg: ")
-x = int(x)
+x = int(x) + 2
 
-y = input(szinek['sárga'] + "Add meg a pálya hosszúságát (a keretet nem bele számítva): ")
+y = input(szinek['sárga'] + "Add meg a pálya magasságát (a keretet nem bele számítva): ")
 while y.isnumeric() == False:
     y = input(szinek['piros'] + "SZÁMOT adjál meg: ")
-y = int(y)
+y = int(y) + 2
+
+x_sor = 0
+x_oszlop = 0
 
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-def labirintus_rajz(x, y):
+def main(x, y):
 
+    global labirintus_sor
     global labirintus
-    global reszekre_bontott_lab
+    global x_sor
+    global x_oszlop
+    labirintus_sor = []
     labirintus = []
-    reszekre_bontott_lab = []
     n = 0
 
     for oszlop in range(y):
         for sor in range(x):
-            if random.randint(1, 3) != 1:
-                labirintus.append(0)
+            if oszlop == 0 or sor == 0:
+                labirintus_sor.append(1)
+            elif oszlop == y - 1 or sor == x - 1:
+                labirintus_sor.append(1)
             else:
-                labirintus.append(1)
+                if oszlop == y - 2 and sor == x - 2:
+                    labirintus_sor.append("X")
+                elif oszlop == 1 and sor == 1:
+                    labirintus_sor.append("◯")
+                elif random.randint(1, 3) != 1:
+                    labirintus_sor.append(0)
+                else:
+                    labirintus_sor.append(1)
 
-    for index in range(1, (y + 1)):
-        reszekre_bontott_lab.append(labirintus[n * x:(x * index)])
+    for index in range(1, (y + 2)):
+        labirintus.append(labirintus_sor[n * x:(x * index)])
         n += 1
 
 
 # ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 #labirintus megrajzolása
 
-    reszekre_bontott_lab[-1].pop(-1)
-    reszekre_bontott_lab[-1].append("X")
+def rajz():
+    global x_oszlop
+    global x_sor
+    print("Leegyszerűsített labirintus:\n")
+    for oszlop in range(y):
+        for sor in range(x):
+            print(labirintus[oszlop][sor], end="")
+        print()
 
-    print(szinek['sárga'] + "┌", end="")
-    for index in range(x):
-        if reszekre_bontott_lab[0][index] == 1:
-            print("─┬", end="")
-        else:
-            print("──", end="")
-    print("┐")
 
-    for oszlop_index in range(y):
-        if reszekre_bontott_lab[oszlop_index][0] == 1:
-            print(szinek['sárga'] + "├", end="")
-        else:
-            print(szinek['sárga'] + "│", end="")
+    print("\nLabirintus:\n")
 
-        for sor_index in range(x):
-            if reszekre_bontott_lab[oszlop_index][sor_index] == 1:
-                if sor_index == 0:  #Ha bal oldalon van...
-                    if oszlop_index == 0:  #Ha legfelül van...
-                        print(szinek['v_kék'], "┘", end="")  #Ha a balfelső sarokban van, akkor ┘ legyen.
-                    elif oszlop_index == y:  #Ha a balalsó sarokban van, akkor ┐ jelenjen meg
-                        print(szinek['v_kék'], "┐", end="")
-                    else:
-                        print(szinek['v_kék'], "─", end="")  #Ha a bal oldalt van, akkor ─ legyen.
-                else:
-                    print(szinek['v_kék'], "│", end="")
-                if sor_index == -1:
-                    if oszlop_index == 0:
-                        print(szinek['v_kék'], "└", end="")
-                    else:
-                        print(szinek['v_kék'], "─", end="")
-            if reszekre_bontott_lab[oszlop_index][sor_index] == "X":
-                print(szinek['v_zöld'], "X", end="")
-            if reszekre_bontott_lab[oszlop_index][sor_index] == 0:
-                print("  ", end="")
+    for oszlop in range(y):
+        for sor in range(x):
+            if labirintus[oszlop][sor] == 1:
+                print(szinek['v_kék'] + "1", end="")
+            elif labirintus[oszlop][sor] == 0:
+                print(szinek['v_kék'] + " ", end="")
+            elif labirintus[oszlop][sor] == "X":
+                print(szinek['v_zöld'] + "X", end="")
+                x_oszlop = oszlop
+                x_sor = sor
+            elif labirintus[oszlop][sor] == "◯":
+                print(szinek['v_piros'] + "◯", end="")
 
-        if reszekre_bontott_lab[oszlop_index][-1] == 1:
-            print(szinek['sárga'] + "┤")
-        else:
-            print(szinek['sárga'] + "│")
+        print()
 
-    print(szinek['sárga'] + "└", end="")
-    for index in range(x):
-        if reszekre_bontott_lab[-1][index] == 1:
-            print("─┴", end="")
-        else:
-            print("──", end="")
-    print("┘")
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-#def jatekos_helye():
-
 
 
 def move(mozgas):
     if mozgas == "fel":
-        print("fel\n")
+        if labirintus[(x_oszlop - 1)][x_sor] == 1:
+            print(szinek['piros'] + "Ide nem léphetsz!")
+        else:
+            print("fel")
+            labirintus[(x_oszlop - 1)].pop(x_sor)
+            labirintus[(x_oszlop - 1)].insert(x_sor, "X")
     elif mozgas == "le":
-        print("le\n")
+        if labirintus[(x_oszlop + 1)][x_sor] == 1:
+            print(szinek['piros'] + "Ide nem léphetsz!")
+        else:
+            print("le")
+            labirintus[(x_oszlop + 1)].pop(x_sor)
+            labirintus[(x_oszlop + 1)].insert(x_sor, "X")
     elif mozgas == "jobbra":
-        print("jobbra\n")
+        if labirintus[x_oszlop][x_sor + 1] == 1:
+            print(szinek['piros'] + "Ide nem léphetsz!")
+        else:
+            print("jobbra")
+            labirintus[x_oszlop].pop(x_sor + 1)
+            labirintus[x_oszlop].insert(x_sor + 1, "X")
     elif mozgas == "balra":
-        print("balra\n")
+        if labirintus[x_oszlop][x_sor - 1] == 1:
+            print(szinek['piros'] + "Ide nem léphetsz!")
+        else:
+            print("balra")
+            labirintus[x_oszlop].pop(x_sor - 1)
+            labirintus[x_oszlop].insert(x_sor - 1, "X")
     elif mozgas == "exit":
         run = False
     else:
@@ -135,9 +149,10 @@ def move(mozgas):
 
 print()
 
-labirintus_rajz(x, y)
+main(x, y)
 
 run = True
 while run:
-    irany = (input(szinek['sárga'] + "Merre akarsz mozogni? (fel, le, jobbra, balra): "))
+    rajz()
+    irany = (input(szinek['sárga'] + "\nMerre akarsz mozogni? (fel, le, jobbra, balra): "))
     move(irany)

@@ -16,7 +16,7 @@ szinek = {
 
 print(szinek['sárga'] + "\nÜDV A LABIRINTUS NEVŰ JÁTÉKBAN!\n")
 print("Ahhoz, hogy nyerj, el kell juttatnod a "+ szinek['v_zöld'] + "X" + szinek['sárga'] + "-et a " + szinek['v_piros'] + "◯" + szinek['sárga'] + "-höz.")
-print("Az mozgás a " + szinek['v_kék'] + "fel" + szinek['sárga'] + ", " + szinek['v_kék'] + "le" + szinek['sárga'] + ", " + szinek['v_kék'] + "jobb" + szinek['sárga'] + " és " + szinek['v_kék'] + "bal" + szinek['sárga'] + " szavak, vagy azok kezdőbetűinek a beírásával beírásával működik.")
+print("A mozgás a " + szinek['v_kék'] + "fel" + szinek['sárga'] + ", " + szinek['v_kék'] + "le" + szinek['sárga'] + ", " + szinek['v_kék'] + "jobb" + szinek['sárga'] + " és " + szinek['v_kék'] + "bal" + szinek['sárga'] + " szavak, vagy azok kezdőbetűinek a beírásával működik.")
 print("Ha nem tetszik a jelenlegi labirintus, az " + szinek['v_kék'] + "újra" + szinek['sárga'] + " beírásával generálhatsz egy másikat, aminek a méretét is megváltoztathatod.")
 print("Ha ki akarsz lépni, akkor ezt az " + szinek['v_kék'] + "exit" + szinek['sárga'] + " beírásával megteheted.")
 print("Sok sikert!")

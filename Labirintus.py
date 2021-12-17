@@ -15,7 +15,7 @@ szinek = {
 #Instrukciók:
 
 print(szinek['sárga'] + "\nÜDV A LABIRINTUS NEVŰ JÁTÉKBAN!\n")
-print("Ahoz, hogy nyerj, el kell juttatnod a "+ szinek['v_zöld'] + "X" + szinek['sárga'] + "-et a " + szinek['v_piros'] + "◯" + szinek['sárga'] + "-höz.")
+print("Ahhoz, hogy nyerj, el kell juttatnod a "+ szinek['v_zöld'] + "X" + szinek['sárga'] + "-et a " + szinek['v_piros'] + "◯" + szinek['sárga'] + "-höz.")
 print("Az mozgás a " + szinek['v_kék'] + "fel" + szinek['sárga'] + ", " + szinek['v_kék'] + "le" + szinek['sárga'] + ", " + szinek['v_kék'] + "jobb" + szinek['sárga'] + " és " + szinek['v_kék'] + "bal" + szinek['sárga'] + " szavak, vagy azok kezdőbetűinek a beírásával beírásával működik.")
 print("Ha nem tetszik a jelenlegi labirintus, az " + szinek['v_kék'] + "újra" + szinek['sárga'] + " beírásával generálhatsz egy másikat, aminek a méretét is megváltoztathatod.")
 print("Ha ki akarsz lépni, akkor ezt az " + szinek['v_kék'] + "exit" + szinek['sárga'] + " beírásával megteheted.")
@@ -68,7 +68,7 @@ def lab_generalas(x, y):
                     labirintus_sor.append("X")
                 elif oszlop == 1 and sor == 1:
                     labirintus_sor.append("◯")
-                elif random.randint(1, 3) != 1:
+                elif random.randint(1, 4) != 1:
                     labirintus_sor.append(0)
                 else:
                     labirintus_sor.append(1)
@@ -238,7 +238,6 @@ def move(mozgas):
     elif mozgas == "újra":
         bevitel()
         lab_generalas(x, y)
-        rajz()
     elif mozgas == "exit":
         run = False
     else:
